@@ -1,90 +1,130 @@
 package encapsulation;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.EmptyStackException;
-import java.util.List;
 import java.util.Stack;
 import java.util.stream.Stream;
 
-import encapsulation.CreateEither.Either;
-
 public class RPNCalc2 {
-	private Stack<Either<Double, Character>> stack = new Stack<Either<Double, Character>>();
-	private static final Character[] operators = {'+', '-', '*', '/',};
-	
-	public void addFromString(String rpn) {
-		for (var item : rpn.split(" ")) {
-			try {
-				pushOperand(Double.parseDouble(item));
-			} catch (NumberFormatException e) {
-				pushOperator(item.charAt(0));
-			}
+	enum Operator {
+		Add, Sub, Mul, Div;
+	}
+
+	enum TokenType {
+		Number, Operator;
+	}
+
+	private interface Token {
+		public TokenType getTokenType();
+	}
+
+	private class NumberToken implements Token {
+		private double value;
+
+		public NumberToken(double value) {
+			this.value = value;
+		}
+
+		public double getValue() {
+			return value;
+		}
+
+		public TokenType getTokenType() {
+			return TokenType.Number;
 		}
 	}
+
+	private class OperatorToken implements Token {
+		private Operator operator;
+		private Token leftToken;
+		private Token rightToken;
+
+		public OperatorToken(Operator operator, Token left, Token right) {
+			this.operator = operator;
+			this.leftToken = left;
+			this.rightToken = right;
+		}
+
+		public double evaluate() {
+			double left;
+			double right;
+
+			if (leftToken.getTokenType() == TokenType.Operator) {
+				left = ((OperatorToken) leftToken).evaluate();
+			} else if (leftToken.getTokenType() == TokenType.Number) {
+				left = ((NumberToken) leftToken).getValue();
+			} else {
+				throw new UnsupportedOperationException("An unsupported token was encountered");
+			}
+
+			if (rightToken.getTokenType() == TokenType.Operator) {
+				right = ((OperatorToken) rightToken).evaluate();
+			} else if (rightToken.getTokenType() == TokenType.Number) {
+				right = ((NumberToken) rightToken).getValue();
+			} else {
+				throw new UnsupportedOperationException("An unsupported token was encountered");
+			}
+
+			switch (operator) {
+			case Add:
+				return left + right;
+			case Sub:
+				return left - right;
+			case Mul:
+				return left * right;
+			case Div:
+				return left / right;
+			default:
+				throw new UnsupportedOperationException(
+						String.format("No implementation for operator '%s'", operator.toString()));
+			}
+		}
+
+		public TokenType getTokenType() {
+			return TokenType.Operator;
+		}
+	}
+
+	private static final String[] operatorStrings = {"+", "-", "*", "/"};
+	private OperatorToken rootToken;
+
+	public RPNCalc2(String expr) {
+		var tokens = new Stack<String>();
+		tokens.addAll(Arrays.asList(expr.split(" ")));
+		
+		rootToken = (OperatorToken) parseTokens(tokens);
+	}
+
+	public double calculate() throws IllegalStateException {
+		return rootToken.evaluate();
+	}
 	
-	public void pushOperand(double item) {
-		stack.push(CreateEither.left(item));
-	}
-
-	public void pushOperator(char item) {
-		var c = (Character) item;
-		if (!Stream.of(operators).anyMatch(c::equals))
-			throw new IllegalArgumentException();
+	private Token parseTokens(Stack<String> tokens) {
+		var toParse = tokens.pop();
 		
-		stack.push(CreateEither.right(c));
-	}
-
-	public Either<Double, Character> pop() throws EmptyStackException {
-		if (stack.empty())
-			throw new EmptyStackException();
-		
-		return stack.pop();
-	}
-
-	public int getSize() {
-		return stack.size();
-	}
-
-	public Double calculate() throws IllegalStateException {
-		var item = stack.pop();
-		if (item.isLeft())
-			return item.unwrapLeft();
-		
-		var operator = item.unwrapRight();
-		var next = stack.peek();
-		Double b;
-		if (next.isRight())
-			b = calculate();
-		else
-			b = stack.pop().unwrapLeft();
-		
-		next = stack.peek();
-		Double a;
-		if (next.isRight())
-			a = calculate();
-		else
-			a = stack.pop().unwrapLeft();
-		
-		switch (operator) {
-		case '+':
-			return a + b;
-		case '-':
-			return a - b;
-		case '*':
-			return a * b;
-		case '/':
-			return a / b;
-		default:
-			throw new IllegalStateException();
+		if (Stream.of(operatorStrings).anyMatch(toParse::equals)) {
+			var right = parseTokens(tokens);
+			var left = parseTokens(tokens);
+			
+			switch (toParse) {
+			case "+":
+				return new OperatorToken(Operator.Add, left, right);
+			case "-":
+				return new OperatorToken(Operator.Sub, left, right);
+			case "*":
+				return new OperatorToken(Operator.Mul, left, right);
+			case "/":
+				return new OperatorToken(Operator.Div, left, right);
+			default:
+				throw new UnsupportedOperationException();
+			}
+		} else {
+			return new NumberToken(Double.parseDouble(toParse));
 		}
 	}
 
 	public static void main(String[] args) {
-		var calc = new RPNCalc2();
-		calc.addFromString("5 2 3 + * 4 - 7 /");
-		
+		var calc = new RPNCalc2("5 2 3 + * 4 - 7 /");
+
 		System.out.println(calc.calculate());
 	}
 }

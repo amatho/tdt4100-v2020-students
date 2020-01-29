@@ -3,7 +3,6 @@ package encapsulation;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 import java.util.Date;
-import java.util.function.Predicate;
 
 enum Gender {
 	Male('M'), Female('F'), None('\0');

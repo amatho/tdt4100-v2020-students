@@ -2,7 +2,6 @@ package encapsulation;
 
 import java.util.regex.Pattern;
 import java.util.EnumSet;
-import java.util.function.Function;
 
 enum VehicleType {
 	Car('C'), Motorcycle('M');
