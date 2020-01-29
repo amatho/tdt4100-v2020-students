@@ -1,7 +1,9 @@
 package encapsulation;
 
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 import java.util.Date;
+import java.util.function.Predicate;
 
 enum Gender {
 	Male('M'), Female('F'), None('\0');
@@ -14,8 +16,8 @@ enum Gender {
 }
 
 public class Person {
-	private static final Pattern nameMatcher = Pattern.compile("\\w{2,}[ ]\\w{2,}");
-	private static final Pattern emailMatcher = Pattern.compile("\\w+[.]{1}\\w+[@]{1}\\w+[\\w+[.]]*");
+	private static final Pattern nameMatcher = Pattern.compile("\\w{2,} \\w{2,}");
+	private static final Pattern emailMatcher = Pattern.compile("\\w+[.]\\w+[@]\\w+[\\w+[.]]*");
 
 	private String name;
 	private String email;
@@ -68,7 +70,7 @@ public class Person {
 		if (name != null && !name.equalsIgnoreCase(emailName))
 			throw new IllegalArgumentException("E-mail must be on the form 'firstname.lastname@domain.countrycode'");
 
-		if (!CTLD.cTLD.contains(tld))
+		if (!Stream.of(CTLD.cTLD).anyMatch(tld::equals))
 			throw new IllegalArgumentException("E-mail's TLD must be a valid country");
 		
 		this.email = email;
