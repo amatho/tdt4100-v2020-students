@@ -1,71 +1,90 @@
 package encapsulation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Stack;
+import java.util.stream.Stream;
+
+import encapsulation.CreateEither.Either;
 
 public class RPNCalc2 {
-	private Stack<Double> stack = new Stack<Double>();
-	private static final List<Character> requiringOperands = Arrays.asList(new Character[]{'+', '-', '*', '/', '~'});
+	private Stack<Either<Double, Character>> stack = new Stack<Either<Double, Character>>();
+	private static final Character[] operators = {'+', '-', '*', '/',};
 	
-	public void push(double item) {
-		stack.push(item);
-	}
-	
-	public double pop() {
-		if (stack.empty())
-			return Double.NaN;
-		
-		return stack.pop();
-	}
-	
-	public double peek(int index) {
-		index = stack.size() - index - 1;
-		if (index < 0 || index >= stack.size())
-			return Double.NaN;
-		
-		return stack.elementAt(index);
-	}
-	
-	public int getSize() {
-		return stack.size();
-	}
-	
-	public void performOperation(char operator) throws IllegalArgumentException {
-		if (requiringOperands.contains(operator)) {
-			if (stack.size() < 2)
-				throw new IllegalArgumentException("Operator '" + operator + "' requires two operands");
-			
-			var b = stack.pop();
-			var a = stack.pop();
-			
-			if (operator == '+')
-				stack.push(a + b);
-			else if (operator == '-')
-				stack.push(a - b);
-			else if (operator == '*')
-				stack.push(a * b);
-			else if (operator == '/')
-				stack.push(a / b);
-			else if (operator == '~') {
-				stack.push(b);
-				stack.push(a);
-			} else
-				throw new IllegalArgumentException("Invalid operator '" + operator + "'");
-			
-		} else {
-			throw new IllegalArgumentException("Operator '" + operator + "' not recognized");
+	public void addFromString(String rpn) {
+		for (var item : rpn.split(" ")) {
+			try {
+				pushOperand(Double.parseDouble(item));
+			} catch (NumberFormatException e) {
+				pushOperator(item.charAt(0));
+			}
 		}
 	}
 	
+	public void pushOperand(double item) {
+		stack.push(CreateEither.left(item));
+	}
+
+	public void pushOperator(char item) {
+		var c = (Character) item;
+		if (!Stream.of(operators).anyMatch(c::equals))
+			throw new IllegalArgumentException();
+		
+		stack.push(CreateEither.right(c));
+	}
+
+	public Either<Double, Character> pop() throws EmptyStackException {
+		if (stack.empty())
+			throw new EmptyStackException();
+		
+		return stack.pop();
+	}
+
+	public int getSize() {
+		return stack.size();
+	}
+
+	public Double calculate() throws IllegalStateException {
+		var item = stack.pop();
+		if (item.isLeft())
+			return item.unwrapLeft();
+		
+		var operator = item.unwrapRight();
+		var next = stack.peek();
+		Double b;
+		if (next.isRight())
+			b = calculate();
+		else
+			b = stack.pop().unwrapLeft();
+		
+		next = stack.peek();
+		Double a;
+		if (next.isRight())
+			a = calculate();
+		else
+			a = stack.pop().unwrapLeft();
+		
+		switch (operator) {
+		case '+':
+			return a + b;
+		case '-':
+			return a - b;
+		case '*':
+			return a * b;
+		case '/':
+			return a / b;
+		default:
+			throw new IllegalStateException();
+		}
+	}
+
 	public static void main(String[] args) {
 		var calc = new RPNCalc2();
-		calc.push(3);
-		calc.push(8);
-		calc.push(2);
-		calc.performOperation('-');
-		calc.performOperation('~');
-		calc.performOperation('/');
-		System.out.println(calc.pop());
+		calc.addFromString("5 2 3 + * 4 - 7 /");
+		
+		System.out.println(calc.calculate());
 	}
 }
