@@ -17,7 +17,7 @@ public class CalculatorController {
     try {
       var parser = new InputParser(inputField.getText());
       resultLabel.setText("" + parser.getValue());
-    } catch (IllegalStateException | IllegalArgumentException e) {
+    } catch (IllegalArgumentException | ParseException e) {
       resultLabel.setText(e.getMessage());
     }
   }

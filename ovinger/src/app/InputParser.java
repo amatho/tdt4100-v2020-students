@@ -16,17 +16,17 @@ public class InputParser {
     }
   }
 
-  public double getValue() {
+  public double getValue() throws ParseException {
     var value = parseExpression();
 
     if (hasNext()) {
-      throw new IllegalStateException();
+      throw new ParseException(index, "Extra character not expected");
     }
 
     return value;
   }
 
-  private double parseExpression() {
+  private double parseExpression() throws ParseException {
     var values = new ArrayList<Double>();
     values.add(parseMultiplication());
 
@@ -46,7 +46,7 @@ public class InputParser {
     return values.stream().reduce(0d, Double::sum);
   }
 
-  private double parseMultiplication() {
+  private double parseMultiplication() throws ParseException {
     var values = new ArrayList<Double>();
     values.add(parseParenthesis());
 
@@ -59,7 +59,7 @@ public class InputParser {
         index++;
         var denominator = parseParenthesis();
         if (denominator == 0) {
-          throw new IllegalStateException();
+          throw new ParseException(index, "Tried to divide by zero");
         }
         values.add(1d / denominator);
       } else {
@@ -74,14 +74,14 @@ public class InputParser {
     }
   }
 
-  private double parseParenthesis() {
+  private double parseParenthesis() throws ParseException {
     var c = peek();
 
     if (c == '(') {
       index++;
       var value = parseExpression();
       if (peek() != ')') {
-        throw new IllegalStateException();
+        throw new ParseException(index, "Missing end of parenthesis");
       }
       index++;
       return value;
@@ -90,7 +90,7 @@ public class InputParser {
     }
   }
 
-  private double parseValue() {
+  private double parseValue() throws ParseException {
     var c = peek();
 
     if (c == '-') {
@@ -99,11 +99,17 @@ public class InputParser {
     } else if (isNumberChar(c)) {
       return parseNumber();
     } else {
-      throw new IllegalStateException(String.format("Unexpected character '%s'", c));
+      String msg;
+      if (c == '\n') {
+        msg = "Unexpected end of expression";
+      } else {
+        msg = String.format("Unexpected character '%c'", c);
+      }
+      throw new ParseException(index, msg);
     }
   }
 
-  private double parseNumber() {
+  private double parseNumber() throws ParseException {
     var stringValue = "";
     var decimalFound = false;
 
@@ -112,7 +118,7 @@ public class InputParser {
 
       if (c == '.') {
         if (decimalFound) {
-          throw new IllegalStateException("Unexpected extra period found");
+          throw new ParseException(index, "Unexpected extra period found");
         }
 
         decimalFound = true;
@@ -127,7 +133,7 @@ public class InputParser {
     }
 
     if (stringValue.isEmpty()) {
-      throw new IllegalStateException("Unexpected character found while parsing number");
+      throw new ParseException(index, "Unexpected character found while parsing number");
     }
 
     return Double.parseDouble(stringValue);
@@ -135,7 +141,7 @@ public class InputParser {
 
   private char peek() {
     if (index >= inputString.length()) {
-      return '\0';
+      return '\n';
     }
 
     return inputString.charAt(index);
@@ -155,7 +161,7 @@ public class InputParser {
     return false;
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws ParseException {
     var input = "(5 * (2 + 3) - 4) / 7";
     var parser = new InputParser(input);
     System.out.println(parser.getValue());
