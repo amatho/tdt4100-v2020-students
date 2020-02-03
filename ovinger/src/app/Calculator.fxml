@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.CalculatorController">
    <children>
       <TextField fx:id="inputField" layoutX="136.0" layoutY="14.0" prefHeight="12.0" prefWidth="328.0" />
-      <Button layoutX="136.0" layoutY="56.0" mnemonicParsing="false" onAction="#onCalculate" text="Calculate" />
-      <Label fx:id="resultLabel" layoutX="136.0" layoutY="111.0" prefHeight="82.0" prefWidth="328.0" />
+      <Button layoutX="343.0" layoutY="195.0" mnemonicParsing="false" onAction="#onCalculate" text="=" />
+      <Button layoutX="343.0" layoutY="167.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="+" textAlignment="CENTER" />
+      <Button layoutX="345.0" layoutY="83.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="/" textAlignment="CENTER" />
+      <Button layoutX="344.0" layoutY="111.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="*" textAlignment="CENTER" />
+      <Button layoutX="344.0" layoutY="139.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="-" textAlignment="CENTER" />
+      <Button layoutX="233.0" layoutY="152.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="1" textAlignment="CENTER" />
+      <Button layoutX="232.0" layoutY="117.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="4" textAlignment="CENTER" />
+      <Button layoutX="268.0" layoutY="152.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="2" textAlignment="CENTER" />
+      <Button layoutX="304.0" layoutY="82.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="9" textAlignment="CENTER" />
+      <Button layoutX="268.0" layoutY="117.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="5" textAlignment="CENTER" />
+      <Button layoutX="304.0" layoutY="117.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="6" textAlignment="CENTER" />
+      <Button layoutX="232.0" layoutY="82.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="7" textAlignment="CENTER" />
+      <Button layoutX="304.0" layoutY="152.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="3" textAlignment="CENTER" />
+      <Button layoutX="268.0" layoutY="82.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="8" textAlignment="CENTER" />
+      <Button layoutX="268.0" layoutY="188.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="0" textAlignment="CENTER" />
+      <TextArea fx:id="resultTextArea" editable="false" layoutX="136.0" layoutY="229.0" prefHeight="120.0" prefWidth="328.0" />
+      <Button layoutX="234.0" layoutY="49.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text="(" />
+      <Button layoutX="269.0" layoutY="49.0" mnemonicParsing="false" onAction="#onInputButtonPressed" text=")" />
+      <Button layoutX="305.0" layoutY="49.0" mnemonicParsing="false" onAction="#onDeletePressed" prefHeight="27.0" prefWidth="63.0" text="&lt;==" />
    </children>
 </AnchorPane>
