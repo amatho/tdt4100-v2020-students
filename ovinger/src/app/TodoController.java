@@ -23,11 +23,11 @@ public class TodoController {
 
     todoList.add(todo);
     new TodoListView(todoListPane, todoList);
-    
+
     nameInput.clear();
     descriptionInput.clear();
     nameInput.requestFocus();
-    
+
     System.out.println(todo);
   }
 }
