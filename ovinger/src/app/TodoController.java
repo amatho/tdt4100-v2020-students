@@ -7,16 +7,21 @@ import javafx.scene.control.TextField;
 
 public class TodoController {
   @FXML
-  public TextField nameInput;
+  private TextField nameInput;
   @FXML
-  public TextField descriptionInput;
+  private TextField descriptionInput;
   @FXML
-  public ScrollPane todoListPane;
+  private ScrollPane todoListPane;
 
   private ArrayList<Todo> todoList = new ArrayList<>();
 
   @FXML
-  public void onAddTodo() {
+  private void initialize() {
+    todoListPane.setStyle("-fx-background: rgb(255, 255, 255);");
+  }
+
+  @FXML
+  private void onAddTodo() {
     var name = nameInput.getText();
     var description = descriptionInput.getText();
     var todo = new Todo(name, description);
