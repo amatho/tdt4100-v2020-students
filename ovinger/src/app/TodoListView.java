@@ -1,9 +1,8 @@
 package app;
 
-import java.util.Collection;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -13,7 +12,8 @@ public class TodoListView extends GridPane {
   private static final Font NAME_FONT = Font.font("Arial", FontWeight.BOLD, 14);
   private static final Font DESCRIPTION_FONT = Font.font("Arial", FontWeight.NORMAL, 12);
 
-  public TodoListView(ScrollPane parent, Collection<Todo> todos) {
+  public TodoListView(TodoController controller) {
+    var parent = controller.getTodoListPane();
     parent.setFitToWidth(true);
 
     var parentWidth = parent.getWidth();
@@ -22,7 +22,7 @@ public class TodoListView extends GridPane {
     setMinHeight(parentHeight);
     setPadding(new Insets(5));
 
-    var iter = todos.iterator();
+    var iter = controller.getTodoList().iterator();
     while (iter.hasNext()) {
       var todo = iter.next();
 
@@ -31,13 +31,20 @@ public class TodoListView extends GridPane {
       name.setFont(NAME_FONT);
       description.setFont(DESCRIPTION_FONT);
 
+      var doneButton = new Button();
+      doneButton.setOnAction(e -> controller.removeTodo(todo.getId()));
+
+      var todoGrid = new GridPane();
+      todoGrid.add(doneButton, 0, 0);
+      todoGrid.addColumn(1, name, description);
+
       if (iter.hasNext()) {
         var separator = new Separator();
         separator.setPadding(new Insets(10, 0, 10, 0));
         separator.setPrefWidth(parentWidth);
-        addColumn(0, name, description, separator);
+        addColumn(0, todoGrid, separator);
       } else {
-        addColumn(0, name, description);
+        addColumn(0, todoGrid);
       }
     }
 
