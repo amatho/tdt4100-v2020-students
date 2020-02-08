@@ -31,10 +31,12 @@ public class TodoListView extends GridPane {
       name.setFont(NAME_FONT);
       description.setFont(DESCRIPTION_FONT);
 
-      var doneButton = new Button();
-      doneButton.setOnAction(e -> controller.removeTodo(todo.getId()));
+      var doneButton = new Button("\u2713");
+      doneButton.setStyle("-fx-font: bold 20px Arial; -fx-padding: 2;");
+      doneButton.setOnAction(e -> controller.removeTodo(todo));
 
       var todoGrid = new GridPane();
+      todoGrid.setHgap(10);
       todoGrid.add(doneButton, 0, 0);
       todoGrid.addColumn(1, name, description);
 

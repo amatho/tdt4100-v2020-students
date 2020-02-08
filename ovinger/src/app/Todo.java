@@ -30,6 +30,15 @@ public class Todo {
   }
 
   @Override
+  public boolean equals(Object o) {
+    if (o instanceof Todo) {
+      return id.equals(((Todo) o).id);
+    }
+
+    return false;
+  }
+
+  @Override
   public String toString() {
     return String.format("Id: %s Name: %s Description: %s", id, name, description);
   }

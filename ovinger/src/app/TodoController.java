@@ -1,7 +1,6 @@
 package app;
 
 import java.util.ArrayList;
-import java.util.UUID;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -45,21 +44,8 @@ public class TodoController {
     return todoList;
   }
 
-  public void removeTodo(UUID id) {
-    var index = 0;
-    var foundTodo = false;
-    for (var todo : todoList) {
-      if (todo.getId().equals(id)) {
-        foundTodo = true;
-        break;
-      }
-      index++;
-    }
-    if (foundTodo) {
-      todoList.remove(index);
-    } else {
-      throw new IllegalArgumentException("The specified ID is not valid");
-    }
+  public void removeTodo(Todo todo) {
+    todoList.remove(todo);
 
     new TodoListView(this);
   }
