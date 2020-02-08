@@ -3,6 +3,7 @@ package app;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -12,32 +13,33 @@ public class TodoListView extends GridPane {
   private static final Font NAME_FONT = Font.font("Arial", FontWeight.BOLD, 14);
   private static final Font DESCRIPTION_FONT = Font.font("Arial", FontWeight.NORMAL, 12);
 
+  private TodoController controller;
+  private ScrollPane parent;
+
   public TodoListView(TodoController controller) {
-    var parent = controller.getTodoListPane();
+    this.controller = controller;
+    parent = controller.getTodoListPane();
     parent.setFitToWidth(true);
+    setPadding(new Insets(5));
+  }
+
+  public void updateView() {
+    getChildren().clear();
 
     var parentWidth = parent.getWidth();
     var parentHeight = parent.getHeight();
-
     setMinHeight(parentHeight);
-    setPadding(new Insets(5));
 
-    var iter = controller.getTodoList().iterator();
+    var iter = controller.todoListIterator();
     while (iter.hasNext()) {
       var todo = iter.next();
 
-      var name = new Label(todo.getName());
-      var description = new Label(todo.getDescription());
-      name.setFont(NAME_FONT);
-      description.setFont(DESCRIPTION_FONT);
-
-      var doneButton = new Button("\u2713");
-      doneButton.setStyle("-fx-font: bold 20px Arial; -fx-padding: 2;");
-      doneButton.setOnAction(e -> controller.removeTodo(todo));
+      var name = labelWithFont(todo.getName(), NAME_FONT);
+      var description = labelWithFont(todo.getDescription(), DESCRIPTION_FONT);
 
       var todoGrid = new GridPane();
       todoGrid.setHgap(10);
-      todoGrid.add(doneButton, 0, 0);
+      todoGrid.add(removeTodoButton(todo), 0, 0);
       todoGrid.addColumn(1, name, description);
 
       if (iter.hasNext()) {
@@ -51,5 +53,19 @@ public class TodoListView extends GridPane {
     }
 
     parent.setContent(this);
+  }
+
+  private Label labelWithFont(String labelText, Font font) {
+    var label = new Label(labelText);
+    label.setFont(font);
+    return label;
+  }
+
+  private Button removeTodoButton(Todo todoToRemove) {
+    var button = new Button("\u2713");
+    button.setStyle("-fx-font: bold 20px Arial; -fx-padding: 2;");
+    button.setOnAction(e -> controller.removeTodo(todoToRemove));
+
+    return button;
   }
 }

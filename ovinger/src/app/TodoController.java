@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -14,9 +15,12 @@ public class TodoController {
   private ScrollPane todoListPane;
 
   private ArrayList<Todo> todoList = new ArrayList<>();
+  private TodoListView todoListView;
 
   @FXML
   private void initialize() {
+    todoListView = new TodoListView(this);
+
     todoListPane.setStyle("-fx-background: rgb(255, 255, 255);");
   }
 
@@ -27,7 +31,7 @@ public class TodoController {
     var todo = new Todo(name, description);
 
     todoList.add(todo);
-    new TodoListView(this);
+    todoListView.updateView();
 
     nameInput.clear();
     descriptionInput.clear();
@@ -40,13 +44,13 @@ public class TodoController {
     return todoListPane;
   }
 
-  public ArrayList<Todo> getTodoList() {
-    return todoList;
+  public Iterator<Todo> todoListIterator() {
+    return todoList.iterator();
   }
 
   public void removeTodo(Todo todo) {
     todoList.remove(todo);
 
-    new TodoListView(this);
+    todoListView.updateView();
   }
 }
