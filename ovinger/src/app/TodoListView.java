@@ -1,5 +1,6 @@
 package app;
 
+import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,7 +10,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class TodoListView extends GridPane {
+public class TodoListView extends GridPane implements ListChangeListener<Todo> {
   private static final Font NAME_FONT = Font.font("Arial", FontWeight.BOLD, 14);
   private static final Font DESCRIPTION_FONT = Font.font("Arial", FontWeight.NORMAL, 12);
 
@@ -23,7 +24,12 @@ public class TodoListView extends GridPane {
     setPadding(new Insets(5));
   }
 
-  public void updateView() {
+  @Override
+  public void onChanged(Change<? extends Todo> arg0) {
+    updateView();
+  }
+
+  private void updateView() {
     getChildren().clear();
 
     var parentWidth = parent.getWidth();
