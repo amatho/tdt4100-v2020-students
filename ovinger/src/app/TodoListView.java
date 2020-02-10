@@ -20,16 +20,15 @@ public class TodoListView extends GridPane implements ListChangeListener<Todo> {
   public TodoListView(TodoController controller) {
     this.controller = controller;
     parent = controller.getTodoListPane();
-    parent.setFitToWidth(true);
     setPadding(new Insets(5));
   }
 
   @Override
-  public void onChanged(Change<? extends Todo> arg0) {
+  public void onChanged(Change<? extends Todo> c) {
     updateView();
   }
 
-  private void updateView() {
+  public void updateView() {
     getChildren().clear();
 
     var parentWidth = parent.getWidth();
@@ -37,6 +36,11 @@ public class TodoListView extends GridPane implements ListChangeListener<Todo> {
     setMinHeight(parentHeight);
 
     var iter = controller.todoListIterator();
+    if (!iter.hasNext()) {
+      var text = labelWithFont("Nothing to do", DESCRIPTION_FONT);
+      addColumn(0, text);
+    }
+
     while (iter.hasNext()) {
       var todo = iter.next();
 
