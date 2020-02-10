@@ -1,0 +1,28 @@
+\documentclass[12pt,a4paper]{article}
+
+\title{Plan for Øving 4}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\begin{itemize}
+    \item Applikasjonen er en huskeliste ("todo list"), hvor man kan legge inn elementer med tittel og beskrivelse.
+    \item Brukergrensesnittet består av to sider (tabs). Den første inneholder listen over nåværende
+          huskeliste-elementer, mens den andre er for å legge til nye elementer til listen.
+    \item Appen skal hovedsakelig bestå av to klasser (utenom "App"-klassen og kontrolleren):
+          \begin{itemize}
+              \item \textbf{Todo} - Dette er representasjonen av ett element i huskelisten. Her vil den overstyrte
+                    "equals"-metoden være hovedmetoden. Denne metoden sammenligner UUID-ene til to Todo'er, for å
+                    sjekke om de er like.
+              \item \textbf{TodoListView} - Ansvarlig for å generere UI'en for selve huskelista. Hovedmetoden er
+                    "updateView", som oppdaterer listen i brukergrensesnittet. Denne itererer over listen av Todo'er
+                    og danner tilsvarende UI-elementer.
+          \end{itemize}
+    \item Lagringen til appen innebærer å lagre en representasjon av listen over Todo'er, slik at man kan beholde den
+          samme listen over flere kjøringer av programmet.
+\end{itemize}
+
+\end{document}
