@@ -4,44 +4,30 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class LazyList<T> implements Iterable<T> {
-  private List<T> list;
+  private Optional<List<T>> list = Optional.empty();
 
   public void add(T item) {
-    if (list == null) {
-      list = new ArrayList<T>();
-    }
-
-    list.add(item);
-  }
-
-  public List<T> asList() {
-    if (list == null) {
-      return new ArrayList<T>();
-    }
-
-    return list;
+    list = list.or(() -> Optional.of(new ArrayList<>())).map(l -> {
+      l.add(item);
+      return l;
+    });
   }
 
   @Override
   public Iterator<T> iterator() {
-    if (list == null) {
-      return new Iterator<T>() {
+    return list.map(l -> l.iterator()).orElse(new Iterator<T>() {
+      @Override
+      public boolean hasNext() {
+        return false;
+      }
 
-        @Override
-        public boolean hasNext() {
-          return false;
-        }
-
-        @Override
-        public T next() {
-          throw new NoSuchElementException();
-        }
-
-      };
-    }
-
-    return list.iterator();
+      @Override
+      public T next() {
+        throw new NoSuchElementException();
+      }
+    });
   }
 }

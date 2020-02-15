@@ -1,19 +1,20 @@
 package folder;
 
-public class Folder implements FSItem {
+public class File implements FSItem {
   private String name;
 
-  public Folder(String name) {
+  public File(String name) {
     this.name = name;
   }
 
   @Override
   public boolean canHaveChildren() {
-    return true;
+    return false;
   }
 
   @Override
   public String getName() {
     return name;
   }
+
 }
