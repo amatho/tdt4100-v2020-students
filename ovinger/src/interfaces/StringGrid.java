@@ -5,7 +5,7 @@ An interface with methods for managing the content of a String grid.
 The grid has a number of rows (the grid's height) and columns (the grid's width).
 In each cell in the grid there is a String that can be set with the setElement method and read with the getElement method.
 */
-public interface StringGrid {
+public interface StringGrid extends Iterable<String> {
     // Returns the number of rows in this StringGrid
     public int getRowCount();
 
