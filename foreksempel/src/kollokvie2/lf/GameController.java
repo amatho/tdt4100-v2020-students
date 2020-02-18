@@ -1,4 +1,4 @@
-package kollokvie2.underveis;
+package kollokvie2.lf;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
@@ -37,7 +37,8 @@ public class GameController {
         game.getTile(8, 3).setGoal();
 
         game.createSnake(Arrays.asList(game.getTile(9, 8), game.getTile(8, 8)));
-        
+             
+
         createBoard();
         drawBoard();
     }
@@ -55,43 +56,11 @@ public class GameController {
             }
         }
     }
-    
-    private void drawBoard() {
-    	for (int y = 0; y < game.getHeight(); y++) {
-    		for (int x = 0; x < game.getWidth(); x++) {
-    			board.getChildren().get(x + y * game.getWidth()).setStyle("-fx-background-color: " + getTileColor(game.getTile(x, y)));
-    		}
-    	}
-    }
-    
-    @FXML
-    public void handleUp() {
-    	game.moveUp();
-    	drawBoard();
-    }
-    
-    @FXML
-    public void handleDown() {
-    	game.moveDown();
-    	drawBoard();
-    }
-    
-    @FXML
-    public void handleLeft() {
-    	game.moveLeft();
-    	drawBoard();
-    }
-    
-    @FXML
-    public void handleRight() {
-    	game.moveRight();
-    	drawBoard();
-    }
 
     private String getTileColor(Tile tile) {
-    	if (game.isSnakeHead(tile)) {
-    		return "#1db121";
-    	} else if (tile.isSnake()) {
+        if (game.isSnakeHead(tile)) {
+            return "#1db121";
+        } else if (tile.isSnake()) {
             return "#24d628";
         } else if (tile.isGround()) {
             return "#a26f42";
@@ -101,6 +70,56 @@ public class GameController {
             return "#f6ec5a";
         }
         return "#7bcaf2";
+    }
+
+    @FXML
+    void handleUp() {
+        game.moveUp();
+        drawBoard();
+    }
+
+    @FXML
+    void handleDown() {
+        game.moveDown();
+        drawBoard();
+    }
+
+    @FXML
+    void handleLeft() {
+        game.moveLeft();
+        drawBoard();
+    }
+
+    @FXML
+    void handleRight() {
+        game.moveRight();
+        drawBoard();
+    }
+
+    private void drawBoard() {
+        for (int y = 0; y < game.getHeight(); y++) {
+            for (int x = 0; x < game.getWidth(); x++) {
+                board.getChildren().get(y * game.getWidth() + x).setStyle("-fx-background-color: " + getTileColor(game.getTile(x, y)));
+            }
+        }
+
+        if (game.isGameWon()) {
+            Text wonText = new Text();
+            wonText.setText("You Won!");
+            wonText.setFill(Color.GREEN);
+            wonText.setStyle("-fx-font-size: 40px;");
+            wonText.setTranslateX(((double) game.getWidth() * 20) / 2 - 80);
+            wonText.setTranslateY(((double) game.getHeight() * 20) / 2);
+            board.getChildren().add(wonText);
+        } else if (game.isGameOver()) {
+            Text lostText = new Text();
+            lostText.setText("You Lost!");
+            lostText.setStyle("-fx-font-size: 40px;");
+            lostText.setFill(Color.RED);
+            lostText.setTranslateX(((double) game.getWidth() * 20) / 2 - 80);
+            lostText.setTranslateY(((double) game.getHeight() * 20) / 2);
+            board.getChildren().add(lostText);
+        }
     }
 
 }

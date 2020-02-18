@@ -1,4 +1,4 @@
-package kollokvie2.underveis;
+package kollokvie2.lf;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,10 +28,6 @@ public class Game {
             tile.setSnake();
         }
         snake = new ArrayList<>(tiles);
-    }
-    
-    public boolean isSnakeHead(Tile tile) {
-    	return tile == snake.get(0);
     }
 
     public boolean isTile(int x, int y) {
@@ -127,6 +123,10 @@ public class Game {
             }
         }
         return true;
+    }
+
+    public boolean isSnakeHead(Tile tile) {
+        return tile == snake.get(0);
     }
 
     public void moveUp() {
