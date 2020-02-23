@@ -24,38 +24,38 @@ public class TodoController {
 
     @FXML
     private void initialize() {
-	todoListView = new TodoListView(this);
-	todoList.addListener(todoListView);
+        todoListView = new TodoListView(this);
+        todoList.addListener(todoListView);
 
-	todoListView.updateView();
+        todoListView.updateView();
 
-	todoListPane.setStyle("-fx-background: rgb(255, 255, 255);");
+        todoListPane.setStyle("-fx-background: rgb(255, 255, 255);");
     }
 
     @FXML
     private void onAddTodo() {
-	var name = nameInput.getText();
-	var description = descriptionInput.getText();
-	var todo = new Todo(name, description);
+        var name = nameInput.getText();
+        var description = descriptionInput.getText();
+        var todo = new Todo(name, description);
 
-	todoList.add(todo);
+        todoList.add(todo);
 
-	nameInput.clear();
-	descriptionInput.clear();
-	tabPane.getSelectionModel().select(0);
+        nameInput.clear();
+        descriptionInput.clear();
+        tabPane.getSelectionModel().select(0);
 
-	System.out.println(todo);
+        System.out.println(todo);
     }
 
     public ScrollPane getTodoListPane() {
-	return todoListPane;
+        return todoListPane;
     }
 
     public Iterator<Todo> todoListIterator() {
-	return todoList.iterator();
+        return todoList.iterator();
     }
 
     public void removeTodo(Todo todo) {
-	todoList.remove(todo);
+        todoList.remove(todo);
     }
 }

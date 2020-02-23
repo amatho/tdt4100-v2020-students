@@ -8,38 +8,38 @@ public class Todo {
     private String description;
 
     public Todo(String name, String description) {
-	if (name.isBlank()) {
-	    throw new IllegalArgumentException("Todo name cannot be blank");
-	}
+        if (name.isBlank()) {
+            throw new IllegalArgumentException("Todo name cannot be blank");
+        }
 
-	id = UUID.randomUUID();
-	this.name = name;
-	this.description = description;
+        id = UUID.randomUUID();
+        this.name = name;
+        this.description = description;
     }
 
     public UUID getId() {
-	return id;
+        return id;
     }
 
     public String getName() {
-	return name;
+        return name;
     }
 
     public String getDescription() {
-	return description;
+        return description;
     }
 
     @Override
     public boolean equals(Object o) {
-	if (o instanceof Todo) {
-	    return id.equals(((Todo) o).id);
-	}
+        if (o instanceof Todo) {
+            return id.equals(((Todo) o).id);
+        }
 
-	return false;
+        return false;
     }
 
     @Override
     public String toString() {
-	return String.format("Id: %s Name: %s Description: %s", id, name, description);
+        return String.format("Id: %s Name: %s Description: %s", id, name, description);
     }
 }

@@ -10,61 +10,61 @@ public class StringGridImpl implements StringGrid {
     private final int rows;
 
     public StringGridImpl(int rows, int columns) {
-	strings = new String[rows][columns];
-	this.columns = columns;
-	this.rows = rows;
+        strings = new String[rows][columns];
+        this.columns = columns;
+        this.rows = rows;
     }
 
     @Override
     public int getColumnCount() {
-	return columns;
+        return columns;
     }
 
     @Override
     public int getRowCount() {
-	return rows;
+        return rows;
     }
 
     @Override
     public String getElement(int row, int column) {
-	if (row < 0 || row >= rows) {
-	    throw new IllegalArgumentException("Row is out of range");
-	} else if (column < 0 || column >= columns) {
-	    throw new IllegalArgumentException("Column is out of range");
-	}
+        if (row < 0 || row >= rows) {
+            throw new IllegalArgumentException("Row is out of range");
+        } else if (column < 0 || column >= columns) {
+            throw new IllegalArgumentException("Column is out of range");
+        }
 
-	return strings[row][column];
+        return strings[row][column];
     }
 
     @Override
     public void setElement(int row, int column, String element) {
-	if (row < 0 || row >= rows) {
-	    throw new IllegalArgumentException("Row is out of range");
-	} else if (column < 0 || column >= columns) {
-	    throw new IllegalArgumentException("Column is out of range");
-	}
+        if (row < 0 || row >= rows) {
+            throw new IllegalArgumentException("Row is out of range");
+        } else if (column < 0 || column >= columns) {
+            throw new IllegalArgumentException("Column is out of range");
+        }
 
-	strings[row][column] = element;
+        strings[row][column] = element;
     }
 
     @Override
     public Iterator<String> iterator() {
-	return new StringGridIterator(this, true);
+        return new StringGridIterator(this, true);
     }
 
     @Override
     public String toString() {
-	return Arrays.stream(strings).map(r -> Arrays.stream(r).collect(Collectors.joining(", ")) + "\n")
-		.collect(Collectors.joining());
+        return Arrays.stream(strings).map(r -> Arrays.stream(r).collect(Collectors.joining(", ")) + "\n")
+                .collect(Collectors.joining());
     }
 
     public static void main(String[] args) {
-	StringGrid sg = new StringGridImpl(3, 4);
-	sg.setElement(1, 2, "yeet");
-	sg.setElement(0, 3, "skeet");
+        StringGrid sg = new StringGridImpl(3, 4);
+        sg.setElement(1, 2, "yeet");
+        sg.setElement(0, 3, "skeet");
 
-	for (var s : sg) {
-	    System.out.println(s);
-	}
+        for (var s : sg) {
+            System.out.println(s);
+        }
     }
 }
