@@ -20,32 +20,42 @@ public class StringMergingIterator implements Iterator<String> {
         return first.hasNext() || second.hasNext();
     }
 
+//    @Override
+//    public String next() {
+//
+//        if (!hasNext()) {
+//            throw new NoSuchElementException();
+//        }
+//
+//        String result = null;
+//
+//        if (!first.hasNext()) {
+//            result = second.next();
+//        } else if (!second.hasNext()) {
+//            result = first.next();
+//        } else {
+//            if (turnSwitch) {
+//                result = first.next();
+//                turnSwitch = false;
+//            } else {
+//                result = second.next();
+//                turnSwitch = true;
+//            }
+//        }
+//
+//        return result;
+//    }
+
     @Override
     public String next() {
-
-        if (!hasNext()) {
+        if (turnSwitch && first.hasNext()) {
+            turnSwitch = false;
+            return first.next();
+        } else if (second.hasNext()) {
+            turnSwitch = true;
+            return second.next();
+        } else {
             throw new NoSuchElementException();
         }
-
-        String result = null;
-
-        if (!first.hasNext()) {
-            result = first.next();
-        } else if (!second.hasNext()) {
-            result = second.next();
-        } else {
-            if (turnSwitch) {
-                result = first.next();
-                turnSwitch = false;
-            }
-            if (!turnSwitch) {
-                result = second.next();
-                turnSwitch = true;
-            }
-
-        }
-
-        return result;
     }
-
 }
