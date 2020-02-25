@@ -1,8 +1,12 @@
-/**
- * @author amatho
- *
- */
 module ovinger {
+    opens app;
+    exports encapsulation;
+    exports interfaces;
+    exports debugging;
+    exports stateandbehavior;
+    exports interfaces.twitter;
+    exports objectstructures;
+
     requires guava;
     requires javafx.base;
     requires javafx.controls;
