@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.TodoController">
   <tabs>
@@ -28,6 +29,23 @@
                   <Label layoutX="143.0" layoutY="91.0" text="Description" />
                   <TextField fx:id="nameInput" layoutX="143.0" layoutY="31.0" prefHeight="25.0" prefWidth="265.0" />
                   <TextArea fx:id="descriptionInput" layoutX="143.0" layoutY="108.0" prefHeight="80.0" prefWidth="265.0" wrapText="true" />
+               </children></AnchorPane>
+      </content>
+    </Tab>
+    <Tab text="Save/Load">
+      <content>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Button layoutX="259.0" layoutY="45.0" mnemonicParsing="false" onAction="#onSave" text="Save">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="258.0" layoutY="114.0" mnemonicParsing="false" onAction="#onLoad" text="Load">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
                </children></AnchorPane>
       </content>
     </Tab>

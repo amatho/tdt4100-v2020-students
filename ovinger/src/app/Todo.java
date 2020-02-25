@@ -1,8 +1,11 @@
 package app;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Todo {
+public class Todo implements Serializable {
+    private static final long serialVersionUID = 4838979689187120519L;
+
     private UUID id;
     private String name;
     private String description;

@@ -9,9 +9,10 @@ public class TodoApp extends Application {
 
     @Override
     public void start(final Stage primaryStage) throws Exception {
-        primaryStage.setTitle("My Application");
-        primaryStage.setScene(new Scene(FXMLLoader.load(TodoApp.class.getResource("TodoApp.fxml"))));
-        primaryStage.show();
+        var loader = new FXMLLoader(TodoApp.class.getResource("TodoApp.fxml"));
+        var scene = new Scene(loader.load());
+        var controller = (TodoController) loader.getController();
+        controller.setup(primaryStage, scene);
     }
 
     public static void main(final String[] args) {
