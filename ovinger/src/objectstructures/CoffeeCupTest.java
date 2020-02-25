@@ -1,9 +1,12 @@
 package objectstructures;
 
-import junit.framework.TestCase;
+import static org.junit.Assert.*;
 
-public class CoffeeCupTest extends TestCase {
+import org.junit.Test;
 
+public class CoffeeCupTest {
+
+    @Test
     public void testConstructor() {
         new CoffeeCup();
 
@@ -26,31 +29,35 @@ public class CoffeeCupTest extends TestCase {
         }
     }
 
+    @Test
     public void testGetCapacity() {
         var c = new CoffeeCup(1337, 10);
         var c2 = new CoffeeCup(42, 10);
 
-        assertEquals(1337.0, c.getCapacity());
-        assertEquals(42.0, c2.getCapacity());
+        assertEquals(1337.0, c.getCapacity(), 0.01);
+        assertEquals(42.0, c2.getCapacity(), 0.01);
     }
 
+    @Test
     public void testGetCurrentVolume() {
         var c = new CoffeeCup(100, 30);
         var c2 = new CoffeeCup(100, 42);
 
-        assertEquals(30.0, c.getCurrentVolume());
-        assertEquals(42.0, c2.getCurrentVolume());
+        assertEquals(30.0, c.getCurrentVolume(), 0.01);
+        assertEquals(42.0, c2.getCurrentVolume(), 0.01);
     }
 
+    @Test
     public void testIncreaseCupSize() {
         var c = new CoffeeCup(2, 1);
 
         c.increaseCupSize(2);
         c.fillCoffee(2);
 
-        assertEquals(4.0, c.getCapacity());
+        assertEquals(4.0, c.getCapacity(), 0.01);
     }
 
+    @Test
     public void testDrinkCoffee() {
         var c = new CoffeeCup(100, 50);
 
@@ -58,9 +65,10 @@ public class CoffeeCupTest extends TestCase {
         c.drinkCoffee(3);
         c.drinkCoffee(3);
 
-        assertEquals(42.0, c.getCurrentVolume());
+        assertEquals(42.0, c.getCurrentVolume(), 0.01);
     }
 
+    @Test
     public void testFillCoffee() {
         var c = new CoffeeCup(100, 30);
 
@@ -68,7 +76,6 @@ public class CoffeeCupTest extends TestCase {
         c.fillCoffee(3);
         c.fillCoffee(2);
 
-        assertEquals(42.0, c.getCurrentVolume());
+        assertEquals(42.0, c.getCurrentVolume(), 0.01);
     }
-
 }
