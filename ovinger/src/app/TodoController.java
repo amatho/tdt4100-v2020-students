@@ -1,11 +1,13 @@
 package app;
 
+import java.io.IOException;
 import java.util.Iterator;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextArea;
@@ -21,6 +23,10 @@ public class TodoController {
     private TextField nameInput;
     @FXML
     private TextArea descriptionInput;
+    @FXML
+    private Label todoErrorLabel;
+    @FXML
+    private Label saveLoadErrorLabel;
 
     private final ObservableList<Todo> todoList = FXCollections.observableArrayList();
     private TodoListView todoListView;
@@ -50,7 +56,17 @@ public class TodoController {
     private void onAddTodo() {
         var name = nameInput.getText();
         var description = descriptionInput.getText();
-        var todo = new Todo(name, description);
+        Todo todo;
+
+        try {
+            todo = new Todo(name, description);
+            todoErrorLabel.setText("");
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+            
+            todoErrorLabel.setText(e.getMessage());
+            return;
+        }
 
         todoList.add(todo);
 
@@ -63,12 +79,30 @@ public class TodoController {
 
     @FXML
     private void onSave() {
-        storage.save();
+        try {
+            storage.save();
+            saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(50, 180, 50)");
+            saveLoadErrorLabel.setText("Todo list saved successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(180, 50, 50)");
+            saveLoadErrorLabel.setText(e.getMessage());
+        }
     }
 
     @FXML
     private void onLoad() {
-        storage.load();
+        try {
+            storage.load();
+            saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(50, 180, 50)");
+            saveLoadErrorLabel.setText("Todo list sucessfully loaded!");
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(180, 50, 50)");
+            saveLoadErrorLabel.setText(e.getMessage());
+        }
     }
 
     public ScrollPane getTodoListPane() {

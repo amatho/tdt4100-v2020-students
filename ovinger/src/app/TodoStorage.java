@@ -19,24 +19,24 @@ public class TodoStorage {
         this.todoList = todoList;
     }
 
-    public void save() {
+    public void save() throws IOException {
         var fileChooser = new FileChooser();
         var file = fileChooser.showSaveDialog(stage);
 
         if (file != null) {
-            try {
-                var f = new FileOutputStream(file);
-                var out = new ObjectOutputStream(f);
-                out.writeObject(todoList.toArray(new Todo[0]));
-                out.close();
-                f.close();
-            } catch (IOException e) {
-                System.err.println("Could not save todos: " + e.getMessage());
-            }
+            var f = new FileOutputStream(file);
+            var out = new ObjectOutputStream(f);
+
+            out.writeObject(todoList.toArray(new Todo[0]));
+
+            out.close();
+            f.close();
+        } else {
+            throw new IOException("File not specified");
         }
     }
 
-    public void load() {
+    public void load() throws IOException {
         var fileChooser = new FileChooser();
         var file = fileChooser.showOpenDialog(stage);
 
@@ -51,11 +51,11 @@ public class TodoStorage {
 
                 in.close();
                 f.close();
-            } catch (IOException e) {
-                System.err.println("Could not save todos: " + e.getMessage());
             } catch (ClassNotFoundException e) {
                 System.err.println(e.getMessage());
             }
+        } else {
+            throw new IOException("File not specified");
         }
     }
 }
