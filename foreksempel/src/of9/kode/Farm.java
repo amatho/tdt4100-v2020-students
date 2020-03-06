@@ -1,4 +1,4 @@
-package kollokvie4.underveis;
+package of9.kode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,5 +16,5 @@ public class Farm {
 			animals.add(animal);
 		}
 	}
-	
+
 }

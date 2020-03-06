@@ -1,15 +1,15 @@
-package kollokvie4.underveis;
+package of9.lf;
 
-public class Chicken implements Animal {
-
+public class Dog implements Animal {
+	
 	private String name;
 	private int age;
 	
-	public Chicken(String name, int age) {
+	public Dog(String name, int age) {
 		this.name = name;
 		this.age = age;
 	}
-	
+
 	@Override
 	public String getName() {
 		return name;
@@ -19,10 +19,16 @@ public class Chicken implements Animal {
 	public int getAge() {
 		return age;
 	}
+	
 
 	@Override
 	public String makeSound() {
-		return name + " says Kluk!";
+		return name + " says Woof!";
 	}
-
+	
+	@Override
+	public int compareTo(Animal other) {
+		return Integer.compare(age, other.getAge());
+	}
+	
 }
