@@ -1,0 +1,9 @@
+Delegeringsteknikken handler om å lage et objekt som fungerer som en slags innpakning av
+et indre objekt. Det indre objektet står for "grovarbeidet", mens delegeringsobjektet tilbyr
+et sett med metoder som tar det indre objektet i bruk.
+
+Observatør-observert-teknikken omhandler objekter som observerer endringer/hendelser på
+andre objekter. Her finnes det et observerbart objekt som lar observatører registrere seg,
+og varsler disse observatørene når en endring de er interessert i oppstår. Dette brukes ofte
+til å f.eks. oppdatere et brukergrensesnitt i tråd med tilstandsendring i tilhørende
+objekter (se blant annet ObservableList i JavaFX).
