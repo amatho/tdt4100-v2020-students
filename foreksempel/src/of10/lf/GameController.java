@@ -1,4 +1,4 @@
-package of10.kode;
+package of10.lf;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
@@ -12,6 +12,7 @@ import java.util.Arrays;
 public class GameController {
 
     private Game game;
+    private SaveHandler saveHandler = new SaveHandler();
 
     @FXML
     Pane board;
@@ -114,12 +115,24 @@ public class GameController {
     
     @FXML
     void handleSave() {
-    	
+    	try {
+    		saveHandler.save(getFilename(), game);
+    		fileNotFoundMessage.setVisible(false);
+    	} catch (FileNotFoundException e) {
+    		fileNotFoundMessage.setVisible(true);
+    	}
     }
     
     @FXML
     void handleLoad() {
-
+    	try {
+			game = saveHandler.load(getFilename());
+    		fileNotFoundMessage.setVisible(false);
+    	} catch (FileNotFoundException e) {
+    		fileNotFoundMessage.setVisible(true);
+		}
+    	createBoard();
+    	drawBoard();
     }
 
     private void drawBoard() {
