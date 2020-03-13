@@ -39,7 +39,7 @@ public class TodoController {
         stage.setTitle("Todo App");
         stage.show();
 
-        storage = new TodoStorage(stage, todoList);
+        storage = new TodoFileStorage(stage);
     }
 
     @FXML
@@ -63,7 +63,7 @@ public class TodoController {
             todoErrorLabel.setText("");
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
-            
+
             todoErrorLabel.setText(e.getMessage());
             return;
         }
@@ -80,7 +80,8 @@ public class TodoController {
     @FXML
     private void onSave() {
         try {
-            storage.save();
+            storage.save(todoList.toArray(new Todo[0]));
+
             saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(50, 180, 50)");
             saveLoadErrorLabel.setText("Todo list saved successfully!");
         } catch (IOException e) {
@@ -94,7 +95,10 @@ public class TodoController {
     @FXML
     private void onLoad() {
         try {
-            storage.load();
+            var todos = storage.load();
+            todoList.clear();
+            todoList.addAll(todos);
+
             saveLoadErrorLabel.setStyle("-fx-text-fill: rgb(50, 180, 50)");
             saveLoadErrorLabel.setText("Todo list sucessfully loaded!");
         } catch (IOException e) {
