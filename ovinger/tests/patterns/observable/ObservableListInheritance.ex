@@ -66,6 +66,15 @@
         <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584380486955" resourcePath="/ovinger/src/patterns/observable/ObservableList.java" sizeMeasure="53" className="patterns.observable.ObservableList">
           <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="    &#xA;    @Override&#xA;    public String toString() {&#xA;        return elements.toString();&#xA;    }&#xA;" edit="/1/@proposals.0/@proposals.0/@attempts.1/@edit" start="1287" end="-3"/>
         </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895611114" resourcePath="/ovinger/src/patterns/observable/ObservableList.java" sizeMeasure="57" className="patterns.observable.ObservableList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="    &#xA;            for (var listener : listeners) {&#xA;                listener.listChanged(this, index);&#xA;            }&#xA;        } else {&#xA;            throw new IllegalArgumentException(&quot;Object not accepted&quot;);&#xA;        }&#xA;    }&#xA;&#xA;    protected void addElement(Object element) {&#xA;        if (acceptsElement(element)) {&#xA;            elements.add(element);&#xA;        } else {&#xA;            throw new IllegalArgumentException(&quot;Object not accepted&quot;);&#xA;        }&#xA;    }&#xA;&#xA;    protected void removeElement(int index) {&#xA;        elements.remove(index);&#xA;    }&#xA;&#xA;    public void addObservableListListener(ObservableListListener listener) {&#xA;        listeners.add(listener);&#xA;    }&#xA;&#xA;    public void removeObservableListListener(ObservableListListener listener) {&#xA;        listeners.remove(listener);&#xA;    }&#xA;" edit="/1/@proposals.0/@proposals.0/@attempts.2/@edit" start="639" end="-91"/>
+        </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895639479" resourcePath="/ovinger/src/patterns/observable/ObservableList.java" sizeMeasure="62" className="patterns.observable.ObservableList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="var index = size();&#xA;            elements.add(element);&#xA;            &#xA;            for (var listener : listeners) {&#xA;                listener.listChanged(this, index);&#xA;            }" edit="/1/@proposals.0/@proposals.0/@attempts.3/@edit" start="958" end="-521"/>
+        </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895641505" resourcePath="/ovinger/src/patterns/observable/ObservableList.java" sizeMeasure="62" className="patterns.observable.ObservableList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="&#xA;            for (var listener : listeners) {&#xA;                listener.listChanged(this, index);&#xA;            }&#xA;        } else {&#xA;            throw new IllegalArgumentException(&quot;Object not accepted&quot;);&#xA;        }&#xA;    }&#xA;&#xA;    protected void addElement(Object element) {&#xA;        if (acceptsElement(element)) {&#xA;            var index = size();&#xA;            elements.add(element);&#xA;" edit="/1/@proposals.0/@proposals.0/@attempts.4/@edit" start="631" end="-631"/>
+        </attempts>
       </proposals>
       <proposals xsi:type="jdt:JdtSourceEditProposal" question="/0/@parts.0/@tasks.1/@q" answer="/0/@parts.0/@tasks.1/@a"/>
       <proposals xsi:type="jdt:JdtSourceEditProposal" question="/0/@parts.0/@tasks.2/@q" answer="/0/@parts.0/@tasks.2/@a">
@@ -188,6 +197,18 @@
         </attempts>
         <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584380546273" resourcePath="/ovinger/src/patterns/observable/ObservableHighscoreList.java" sizeMeasure="67" className="patterns.observable.ObservableHighscoreList">
           <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="&#xA;    @Override&#xA;    public boolean acceptsElement(Object element) {&#xA;        return element instanceof Integer;&#xA;    }&#xA;&#xA;    public void addResult(int result) {&#xA;        var addedIndex = 0;&#xA;        var resultAdded = false;&#xA;&#xA;        for (var i = 0; i &lt; maxSize; i++) {&#xA;            if (compare(getOrNull(i), result) > 0) {&#xA;                add(i, result);&#xA;                resultAdded = true;&#xA;                addedIndex = i;&#xA;                break;&#xA;            }&#xA;        }&#xA;&#xA;        if (resultAdded) {&#xA;            for (var listener : listeners) {&#xA;                listener.listChanged(this, addedIndex);&#xA;            }&#xA;        }&#xA;    }&#xA;&#xA;    @Override&#xA;    public String toString() {&#xA;        return super.toString();&#xA;    }&#xA;&#xA;    private void add(int index, int element) {&#xA;        if (size() == maxSize) {&#xA;            removeElement(maxSize - 1);&#xA;        }&#xA;&#xA;        addElement(index, element);&#xA;    }&#xA;&#xA;    private Integer getOrNull(int index) {&#xA;        if (index &lt; 0 || index >= size()) {&#xA;            return null;&#xA;        }&#xA;&#xA;        return (Integer) getElement(index" edit="/1/@proposals.0/@proposals.2/@attempts.36/@edit" start="223" end="-324"/>
+        </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895711859" resourcePath="/ovinger/src/patterns/observable/ObservableHighscoreList.java" sizeMeasure="61" warningCount="2" className="patterns.observable.ObservableHighscoreList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString=" " edit="/1/@proposals.0/@proposals.2/@attempts.37/@edit" start="686" end="-753"/>
+          <markers xsi:type="jdt:JdtMarkerInfo" lineNumber="17" charStart="436" charEnd="447" severity="1" problemCategory="120" problemType="536870973"/>
+        </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895749280" resourcePath="/ovinger/src/patterns/observable/ObservableHighscoreList.java" sizeMeasure="61" warningCount="2" className="patterns.observable.ObservableHighscoreList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="    " edit="/1/@proposals.0/@proposals.2/@attempts.38/@edit" start="692" end="-748"/>
+          <markers xsi:type="jdt:JdtMarkerInfo" lineNumber="17" charStart="436" charEnd="447" severity="1" problemCategory="120" problemType="536870973"/>
+        </attempts>
+        <attempts xsi:type="jdt:JdtSourceEditEvent" timestamp="1584895751103" resourcePath="/ovinger/src/patterns/observable/ObservableHighscoreList.java" sizeMeasure="61" warningCount="2" className="patterns.observable.ObservableHighscoreList">
+          <edit xsi:type="exercise:ReplaceSubstringEdit" storedString="&#xA;" edit="/1/@proposals.0/@proposals.2/@attempts.39/@edit" start="692" end="-747"/>
+          <markers xsi:type="jdt:JdtMarkerInfo" lineNumber="17" charStart="436" charEnd="447" severity="1" problemCategory="120" problemType="536870973"/>
         </attempts>
       </proposals>
       <proposals xsi:type="jdt:JdtLaunchProposal" question="/0/@parts.0/@tasks.3/@q" answer="/0/@parts.0/@tasks.3/@a">
@@ -546,8 +567,39 @@ Enter a result [-1 to quit]: </consoleOutput>
           <successTests>testListListenerMoreThanMax</successTests>
           <successTests>testConstructor</successTests>
         </attempts>
+        <attempts xsi:type="junit:JunitTestEvent" timestamp="1584892731492" completion="1.0" testRunName="patterns.observable.ObservableHighscoreListTest" successCount="7">
+          <successTests>testAddElementSimple</successTests>
+          <successTests>testAddElementDuplicate</successTests>
+          <successTests>testListListenerSimple</successTests>
+          <successTests>testListListenerDuplicate</successTests>
+          <successTests>testAddElementMoreThanMax</successTests>
+          <successTests>testListListenerMoreThanMax</successTests>
+          <successTests>testConstructor</successTests>
+        </attempts>
+        <attempts xsi:type="junit:JunitTestEvent" timestamp="1584895785222" completion="1.0" testRunName="patterns.observable.ObservableHighscoreListTest" successCount="7">
+          <successTests>testAddElementSimple</successTests>
+          <successTests>testAddElementDuplicate</successTests>
+          <successTests>testListListenerSimple</successTests>
+          <successTests>testListListenerDuplicate</successTests>
+          <successTests>testAddElementMoreThanMax</successTests>
+          <successTests>testListListenerMoreThanMax</successTests>
+          <successTests>testConstructor</successTests>
+        </attempts>
       </proposals>
-      <proposals xsi:type="junit:JunitTestProposal" question="/0/@parts.0/@tasks.7/@q" answer="/0/@parts.0/@tasks.7/@a"/>
+      <proposals xsi:type="junit:JunitTestProposal" question="/0/@parts.0/@tasks.7/@q" answer="/0/@parts.0/@tasks.7/@a">
+        <attempts xsi:type="junit:JunitTestEvent" timestamp="1584892737076" completion="0.75" testRunName="patterns.observable.ObservableListTest" successCount="3" failureCount="1">
+          <successTests>testAddElement</successTests>
+          <successTests>testAcceptsElement</successTests>
+          <successTests>testConstructor</successTests>
+          <failureTests>testListListener</failureTests>
+        </attempts>
+        <attempts xsi:type="junit:JunitTestEvent" timestamp="1584895657086" completion="1.0" testRunName="patterns.observable.ObservableListTest" successCount="4">
+          <successTests>testListListener</successTests>
+          <successTests>testAddElement</successTests>
+          <successTests>testAcceptsElement</successTests>
+          <successTests>testConstructor</successTests>
+        </attempts>
+      </proposals>
     </proposals>
     <proposals exercisePart="/0/@parts.1">
       <proposals xsi:type="workbench:DebugEventProposal" question="/0/@parts.1/@tasks.0/@q" answer="/0/@parts.1/@tasks.0/@a">

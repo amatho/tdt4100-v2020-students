@@ -21,6 +21,10 @@ public abstract class ObservableList {
     protected void addElement(int index, Object element) {
         if (acceptsElement(element)) {
             elements.add(index, element);
+
+            for (var listener : listeners) {
+                listener.listChanged(this, index);
+            }
         } else {
             throw new IllegalArgumentException("Object not accepted");
         }
@@ -28,7 +32,12 @@ public abstract class ObservableList {
 
     protected void addElement(Object element) {
         if (acceptsElement(element)) {
+            var index = size();
             elements.add(element);
+
+            for (var listener : listeners) {
+                listener.listChanged(this, index);
+            }
         } else {
             throw new IllegalArgumentException("Object not accepted");
         }

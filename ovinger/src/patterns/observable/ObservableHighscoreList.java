@@ -13,21 +13,10 @@ public class ObservableHighscoreList extends ObservableList {
     }
 
     public void addResult(int result) {
-        var addedIndex = 0;
-        var resultAdded = false;
-
         for (var i = 0; i < maxSize; i++) {
             if (compare(getOrNull(i), result) > 0) {
                 add(i, result);
-                resultAdded = true;
-                addedIndex = i;
                 break;
-            }
-        }
-
-        if (resultAdded) {
-            for (var listener : listeners) {
-                listener.listChanged(this, addedIndex);
             }
         }
     }
